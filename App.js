@@ -1,42 +1,37 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Navbar} from "./src/Navbar";
-import {AddTodo} from "./src/AddTodo";
-import {Todo} from "./src/Todo";
+import {StyleSheet, View} from 'react-native';
+import {Navbar} from "./src/components/Navbar";
+import {MainScreen} from "./src/screens/MainScreen";
+import {TodoScreen} from "./src/screens/TodoScreen";
 
-export default () => {
+export default function App() {
     const [todos, setTodos] = useState([]);
+    const [todoId, setTodoId] = useState(null);
 
     const addTodo = title => {
-        // const newTodo = {
-        //     id: Date.now().toString(),
-        //     title: title
-        // };
-        // setTodos(todos.concat([newTodo])) мутирующа
-        // setTodos((prevTodos) => {
-        //     return [
-        //         ...prevTodos,
-        //         newTodo
-        //     ]
-        // })
-
-        setTodos(prev => [...prev,
+        setTodos(prev => [
             {
                 id: Date.now().toString(),
                 title
-            }
+            },
+            ...prev
         ])
     };
+    const removeTodo = todoId => {
+        setTodos(prev => prev.filter(todo => todo.id !== todoId));
+    };
+
+    let content = <MainScreen addTodo={addTodo} removeTodo={removeTodo} todos={todos}/>;
+
+    if (todoId) {
+        content = <TodoScreen/>
+    }
 
     return (
         <View style={styles.container}>
             <Navbar/>
             <View style={styles.wrapper}>
-                <AddTodo onSubmit={addTodo}/>
-
-                <View>
-                    {todos.map(todo => <Todo key={todo.id} todo={todo}/>)}
-                </View>
+                {content}
             </View>
         </View>
     )
@@ -44,9 +39,13 @@ export default () => {
 
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        flex: 1
+    },
     wrapper: {
         paddingHorizontal: 20,
-        paddingVertical: 10
+        paddingVertical: 10,
+        flex: 1,
+        marginBottom: 10
     },
 });
