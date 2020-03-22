@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {Navbar} from "./src/components/Navbar";
-import {MainScreen} from "./src/screens/MainScreen";
 import {TodoScreen} from "./src/screens/TodoScreen";
+import {MainScreen} from "./src/screens/MainScreen";
 
 export default function App() {
     const [todos, setTodos] = useState([
-        {id: "1", title: "выучить react native"},
-        {id: "2", title: "написать приложение"}]);
-    const [todoId, setTodoId] = useState("2");
+        {id: "1", title: "Выучить react native"}]);
+    const [todoId, setTodoId] = useState(null);
 
     const addTodo = title => {
         setTodos(prev => [
@@ -20,7 +19,33 @@ export default function App() {
         ])
     };
     const removeTodo = todoId => {
-        setTodos(prev => prev.filter(todo => todo.id !== todoId));
+        const todo = todos.filter(t => t.id === todoId)[0];
+        Alert.alert(
+            'Удаление элемента',
+            `Вы уверены что хотите удалить: "${todo.title}"?`,
+            [
+                {
+                    text: 'Отмена',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Удалить', onPress: () => {
+                        setTodoId(null);
+                        setTodos(prev => prev.filter(todo => todo.id !== todoId));
+                    },
+                    style: 'destructive'
+                },
+            ],
+            {cancelable: false},
+        );
+    };
+    const renameTodo = (id, title) => {
+        setTodos(prev => prev.map(todo => {
+            if (todo.id === id) {
+                todo.title = title;
+            }
+            return todo;
+        }));
     };
 
     let content = <MainScreen onOpen={id => {
@@ -29,7 +54,7 @@ export default function App() {
 
     if (todoId) {
         const todo = todos.find(selected => selected.id === todoId);
-        content = <TodoScreen removeTodo={removeTodo} todo={todo} goBack={() => setTodoId(null)}/>
+        content = <TodoScreen onSave={renameTodo} removeTodo={removeTodo} todo={todo} goBack={() => setTodoId(null)}/>
     }
 
     return (
