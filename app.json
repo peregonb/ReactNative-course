@@ -1,9 +1,13 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "name": "Todo List",
     "slug": "react-native-demo",
     "privacy": "public",
     "sdkVersion": "36.0.0",
+    "android": {
+      "package": "com.peregonb.todolist",
+      "versionCode": 1
+    },
     "platforms": [
       "ios",
       "android",

@@ -1,6 +1,6 @@
 const mainTheme = {
     REMOVE : "#e53935",
-    BACK: "#757575",
+    BACK: "#959595",
     MAIN: "#3949AB"
 };
 

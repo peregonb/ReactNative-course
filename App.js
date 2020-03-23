@@ -1,13 +1,30 @@
 import React, {useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import * as Font from 'expo-font';
+import {AppLoading} from 'expo';
+import {Alert, Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {Navbar} from "./src/components/Navbar";
 import {TodoScreen} from "./src/screens/TodoScreen";
 import {MainScreen} from "./src/screens/MainScreen";
+
+const loadApp = async () => {
+    await Font.loadAsync({
+        'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+        'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf')
+    });
+};
 
 export default function App() {
     const [todos, setTodos] = useState([
         {id: "1", title: "Выучить react native"}]);
     const [todoId, setTodoId] = useState(null);
+    const [isReady, setIsReady] = useState(false);
+    const statusBar = <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>;
+
+    if (!isReady) {
+        return <AppLoading startAsync={loadApp}
+                           onError={err => console.log(err)}
+                           onFinish={() => setIsReady(true)}/>
+    }
 
     const addTodo = title => {
         setTodos(prev => [
@@ -59,6 +76,7 @@ export default function App() {
 
     return (
         <View style={styles.container}>
+            {statusBar}
             <Navbar/>
             <View style={styles.wrapper}>
                 {content}
