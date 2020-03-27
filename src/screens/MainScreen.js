@@ -1,15 +1,21 @@
-import React from 'react';
-import {FlatList, Image, StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, FlatList, Image, StyleSheet, View} from 'react-native';
 import {AddTodo} from "../components/AddTodo";
 import {Todo} from "../components/Todo";
+import {THEME} from '../THEME'
+import {withUpdatesOnRotation} from "../components/hoc/withUpdatesOnRotation";
 
-export const MainScreen = ({addTodo, todos, removeTodo, onOpen}) => {
+export const MainScreenContent = ({addTodo, todos, removeTodo, onOpen, vw}) => {
+
     let content = (
-        <FlatList
-            keyExtractor={item => item.id.toString()}
-            data={todos}
-            renderItem={({item}) => <Todo onOpen={onOpen} todo={item} removeTodo={removeTodo}/>}
-        />);
+        <View style={{width: 100 * vw - THEME.PADDING_HORIZONTAL * 2}}>
+            <FlatList
+                keyExtractor={item => item.id.toString()}
+                data={todos}
+                renderItem={({item}) => <Todo onOpen={onOpen} todo={item} removeTodo={removeTodo}/>}
+            />
+        </View>
+    );
 
     if (!todos.length) {
         content = (
@@ -39,3 +45,6 @@ let styles = StyleSheet.create({
         opacity: 0.5
     }
 });
+
+
+export const MainScreen = withUpdatesOnRotation(MainScreenContent);

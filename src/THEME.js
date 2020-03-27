@@ -1,7 +1,8 @@
 const mainTheme = {
     REMOVE : "#e53935",
     BACK: "#959595",
-    MAIN: "#3949AB"
+    MAIN: "#3949AB",
+    PADDING_HORIZONTAL: 20,
 };
 
 const nightTheme = {

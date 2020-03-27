@@ -1,9 +1,10 @@
 import React from 'react';
-import {Alert, Button, Modal, StyleSheet, TextInput, View} from 'react-native';
+import {Alert, Modal, StyleSheet, TextInput, View} from 'react-native';
 import {THEME} from '../THEME';
 import {AppButton} from "./ui/AppButton";
+import {withUpdatesOnRotation} from "./hoc/withUpdatesOnRotation";
 
-export const EditModal = ({visible, closeModal, value, onSave}) => {
+const EditModalContent = ({visible, closeModal, value, onSave, vw}) => {
     const [title, setTitle] = React.useState(value);
 
     const saveHandler = () => {
@@ -14,6 +15,32 @@ export const EditModal = ({visible, closeModal, value, onSave}) => {
             onSave(title);
         }
     };
+
+    let styles = StyleSheet.create({
+        block: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+        },
+        input: {
+            padding: 10,
+            borderBottomColor: THEME.MAIN,
+            borderBottomWidth: 2,
+            width: 80 * vw,
+            color: '#000',
+            textDecorationLine: 'none'
+        },
+        buttons: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: 80 * vw,
+            marginTop: 20
+        },
+        button: {
+            width: '45%'
+        }
+    });
 
     return (
         <Modal style={styles.modal}
@@ -42,28 +69,5 @@ export const EditModal = ({visible, closeModal, value, onSave}) => {
     )
 };
 
-let styles = StyleSheet.create({
-    block: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-    },
-    input: {
-        padding: 10,
-        borderBottomColor: THEME.MAIN,
-        borderBottomWidth: 2,
-        width: '80%',
-        color: '#000',
-        textDecorationLine: 'none'
-    },
-    buttons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '80%',
-        marginTop: 20
-    },
-    button: {
-        width: '45%'
-    }
-});
+
+export const EditModal = withUpdatesOnRotation(EditModalContent);

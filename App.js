@@ -5,6 +5,7 @@ import {Alert, Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {Navbar} from "./src/components/Navbar";
 import {TodoScreen} from "./src/screens/TodoScreen";
 import {MainScreen} from "./src/screens/MainScreen";
+import {THEME} from "./src/THEME";
 
 const loadApp = async () => {
     await Font.loadAsync({
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     wrapper: {
-        paddingHorizontal: 20,
+        paddingHorizontal: THEME.PADDING_HORIZONTAL,
         paddingVertical: 10,
         flex: 1,
         marginBottom: 10
