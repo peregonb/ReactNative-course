@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, FlatList, Image, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {FlatList, Image, StyleSheet, View} from 'react-native';
 import {AddTodo} from "../components/AddTodo";
 import {Todo} from "../components/Todo";
 import {THEME} from '../THEME'
