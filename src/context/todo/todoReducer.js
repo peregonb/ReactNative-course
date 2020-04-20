@@ -1,23 +1,27 @@
-import {ADD_TODO, REMOVE_TODO, UPDATE_TODO} from "./types";
+import { ADD_TODO, REMOVE_TODO, UPDATE_TODO } from './types'
 
 const handlers = {
-    [ADD_TODO]: (state, {title}) => ({
-        ...state, todos: [
+    [ADD_TODO]: (state, { title }) => ({
+        ...state,
+        todos: [
             {
                 id: Date.now().toString(),
-                title
-            }, ...state.todos]
+                title,
+            },
+            ...state.todos,
+        ],
     }),
-    [REMOVE_TODO]: (state, {id}) => ({...state, todos: state.todos.filter(todo => todo.id !== id)}),
-    [UPDATE_TODO]: (state, {title, id}) => ({
-        ...state, todos: state.todos.map(todo => {
+    [REMOVE_TODO]: (state, { id }) => ({ ...state, todos: state.todos.filter((todo) => todo.id !== id) }),
+    [UPDATE_TODO]: (state, { title, id }) => ({
+        ...state,
+        todos: state.todos.map((todo) => {
             if (todo.id === id) {
                 todo.title = title
             }
             return todo
-        })
+        }),
     }),
-    DEFAULT: state => state
+    DEFAULT: (state) => state,
 }
 
 export const todoReducer = (state, action) => {
